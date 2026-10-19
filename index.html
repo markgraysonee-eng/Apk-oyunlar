@@ -1,0 +1,739 @@
+```html
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APK Oyun İndirme Merkezi - En Popüler MOD APK Oyunlar</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        },
+                        darkbg: '#0a0f1d',
+                        darkcard: '#131c31',
+                        darkborder: '#1e2d4a'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Orbitron', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0f1d;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(34, 197, 94, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(14, 165, 233, 0.12) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(34, 197, 94, 0.3);
+        }
+        .glow-effect:hover {
+            box-shadow: 0 0 35px 0px rgba(34, 197, 94, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #22c55e;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen font-sans flex flex-col selection:bg-brand-500 selection:text-black">
+
+    <header class="sticky top-0 z-40 bg-darkbg/90 backdrop-blur-md border-b border-darkborder shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="resetFilters()">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 via-emerald-500 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-brand-500/40">
+                        <i class="fa-solid fa-gamepad text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-heading text-2xl font-black tracking-wider bg-gradient-to-r from-brand-400 via-emerald-300 to-cyan-400 bg-clip-text text-transparent">
+                            APK<span class="text-white">ZONE</span>
+                        </span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-brand-500/20 text-brand-400 border border-brand-500/30">MOD & FULL APK</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden md:flex flex-1 max-w-lg mx-10">
+                    <div class="relative w-full">
+                        <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Oyun ara (Örn: Anger of Stick 5, Subways Surfers)..." 
+                            class="w-full pl-12 pr-4 py-3 rounded-2xl bg-darkcard/80 border border-darkborder focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 text-sm text-white placeholder-gray-400 transition-all shadow-inner">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-brand-400 text-lg"></i>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="openUploadModal()" class="flex items-center space-x-2 bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-all duration-200 shadow-lg shadow-brand-600/30 hover:scale-105 active:scale-95 border border-brand-400/30">
+                        <i class="fa-solid fa-cloud-arrow-up text-base"></i>
+                        <span class="hidden sm:inline">Kendi Oyununu Ekle</span>
+                        <span class="sm:hidden">Ekle</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="md:hidden pb-4">
+                <div class="relative w-full">
+                    <input type="text" id="mobileSearchInput" onkeyup="handleMobileSearch()" placeholder="Oyun ara (Anger of Stick, GTA...)" 
+                        class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-darkcard border border-darkborder focus:border-brand-500 text-sm text-white placeholder-gray-400 outline-none">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-brand-400"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-darkcard via-slate-900 to-darkcard text-white p-6 sm:p-12 mb-10 border border-darkborder/80 shadow-2xl">
+            <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-bold rounded-full mb-4">
+                    <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
+                    🔥 Sınırsız Para & Hileli MOD APK Oyunlar
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-black font-heading tracking-tight mb-4 leading-tight">
+                    EN SEVDİĞİN ANDROID OYUNLARINI <span class="text-brand-400">TEK TIKLA İNDİR</span>
+                </h1>
+                <p class="text-gray-300 text-sm sm:text-base mb-8 leading-relaxed max-w-2xl">
+                    Anger of Stick 5, Shadow Fight 2, Subway Surfers, Minecraft ve yüzlerce popüler Android oyununun en güncel APK ve hileli MOD versiyonları burada!
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="filterCategory('Popüler')" class="bg-brand-500 hover:bg-brand-400 text-black font-extrabold px-6 py-3 rounded-2xl text-sm transition-all duration-200 shadow-lg shadow-brand-500/30 flex items-center gap-2 hover:scale-105">
+                        <i class="fa-solid fa-fire text-lg"></i> En Popüler Oyunlar
+                    </button>
+                    <button onclick="filterCategory('Aksiyon')" class="bg-darkcard hover:bg-slate-800 text-white font-bold px-6 py-3 rounded-2xl text-sm border border-darkborder transition flex items-center gap-2">
+                        <i class="fa-solid fa-gun text-brand-400"></i> Aksiyon Oyunları
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold flex items-center gap-2 text-white font-heading">
+                <i class="fa-solid fa-shapes text-brand-400"></i> Kategoriler
+            </h2>
+            <button onclick="resetFilters()" class="text-xs text-brand-400 hover:text-brand-300 font-bold flex items-center gap-1 bg-brand-500/10 px-3 py-1.5 rounded-lg border border-brand-500/20">
+                <i class="fa-solid fa-rotate-left"></i> Tümünü Göster
+            </button>
+        </div>
+
+        <div class="flex space-x-3 overflow-x-auto pb-4 mb-8 custom-scrollbar" id="categoriesContainer">
+            <!-- Rendered via JavaScript -->
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3 bg-darkcard/50 p-4 rounded-2xl border border-darkborder">
+            <div>
+                <h2 class="text-xl font-extrabold tracking-tight text-white" id="sectionTitle">Öne Çıkan APK Oyunlar</h2>
+                <p class="text-xs text-gray-400 mt-0.5" id="gameCountText">Oyunlar yükleniyor...</p>
+            </div>
+            
+            <div class="flex items-center space-x-3 self-end sm:self-auto">
+                <label for="sortBy" class="text-xs text-gray-400 font-semibold">Sırala:</label>
+                <select id="sortBy" onchange="renderGames()" class="bg-darkbg border border-darkborder text-gray-200 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-brand-500">
+                    <option value="popular">🔥 En Çok İndirilenler</option>
+                    <option value="rating">⭐ En Yüksek Puanlılar</option>
+                    <option value="newest">⚡ En Yeni Eklenenler</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="gamesGrid">
+            <!-- Game Cards will be rendered dynamically by JavaScript -->
+        </div>
+
+        <!-- Empty State View -->
+        <div id="emptyState" class="hidden text-center py-20 bg-darkcard/30 rounded-3xl border border-darkborder my-8">
+            <div class="w-20 h-20 bg-darkcard rounded-full flex items-center justify-center mx-auto mb-4 text-brand-400 text-3xl border border-darkborder">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Aradığın Oyun Bulunamadı</h3>
+            <p class="text-sm text-gray-400 max-w-sm mx-auto mb-6">Aramana veya filtrene uygun APK oyunu bulunamadı. Lütfen başka bir kelime dene.</p>
+            <button onclick="resetFilters()" class="bg-brand-500 text-black font-bold text-sm px-6 py-2.5 rounded-xl hover:bg-brand-400 transition">
+                Filtreleri Temizle
+            </button>
+        </div>
+
+    </main>
+
+    <footer class="bg-darkcard/80 border-t border-darkborder py-10 mt-16 text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 text-center sm:text-left sm:flex sm:justify-between sm:items-center">
+            <div class="mb-6 sm:mb-0">
+                <div class="flex items-center justify-center sm:justify-start space-x-3 mb-3">
+                    <div class="w-9 h-9 rounded-xl bg-brand-500 flex items-center justify-center text-black font-bold">
+                        <i class="fa-solid fa-gamepad text-lg"></i>
+                    </div>
+                    <span class="font-heading text-xl font-black text-white">APKZONE TR</span>
+                </div>
+                <p class="text-xs text-gray-400 max-w-md">Türkiye'nin en güvenli MOD APK ve Orijinal Android oyun indirme portalı. Tüm içerikler hızlı ve doğrudan indirme bağlantıları sunar.</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-6 text-xs font-semibold text-gray-400">
+                <a href="#" onclick="alert('DMCA / Telif bildirimi için: dmca@apkzone.com')" class="hover:text-brand-400 transition">DMCA / Telif</a>
+                <a href="#" onclick="alert('Sponsorluk ve iletişim için: iletisim@apkzone.com')" class="hover:text-brand-400 transition">İletişim</a>
+                <a href="#" onclick="alert('Gizlilik Politikası: Verileriniz güvendedir.')" class="hover:text-brand-400 transition">Gizlilik Politikası</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Game Detail Modal -->
+    <div id="gameModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-darkcard w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden border border-darkborder my-8 transform transition-all">
+            
+            <div class="relative h-56 sm:h-64 bg-gray-900 overflow-hidden">
+                <img id="modalCover" src="" class="w-full h-full object-cover opacity-75" alt="Cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-darkcard via-darkcard/40 to-transparent"></div>
+                
+                <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/60 hover:bg-brand-500 hover:text-black text-white flex items-center justify-center backdrop-blur-md transition border border-white/10">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+
+                <div class="absolute bottom-4 left-6 right-6 flex items-end space-x-4">
+                    <img id="modalIcon" src="" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-brand-500/50 shadow-2xl object-cover bg-darkbg" alt="Icon">
+                    <div class="text-white pb-1 flex-1">
+                        <span id="modalModBadge" class="inline-block px-2.5 py-0.5 text-[10px] font-extrabold rounded-md bg-brand-500 text-black mb-1.5 uppercase tracking-wide">MOD APK</span>
+                        <h2 id="modalTitle" class="text-2xl sm:text-3xl font-black font-heading leading-tight text-white"></h2>
+                        <p id="modalDeveloper" class="text-xs text-gray-300 flex items-center gap-1.5 mt-1">
+                            <i class="fa-solid fa-code text-brand-400"></i> <span id="modalDevName"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 space-y-6">
+                <div class="grid grid-cols-3 gap-3 bg-darkbg p-4 rounded-2xl border border-darkborder text-center text-xs">
+                    <div>
+                        <span class="block text-gray-400 mb-1">Boyut</span>
+                        <span id="modalSize" class="font-extrabold text-white text-sm"></span>
+                    </div>
+                    <div class="border-x border-darkborder">
+                        <span class="block text-gray-400 mb-1">Sürüm</span>
+                        <span id="modalVersion" class="font-extrabold text-brand-400 text-sm"></span>
+                    </div>
+                    <div>
+                        <span class="block text-gray-400 mb-1">Puan</span>
+                        <span id="modalRating" class="font-extrabold text-amber-400 text-sm flex items-center justify-center gap-1"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-bold text-white mb-2 font-heading flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-brand-400"></i> Oyun Açıklaması
+                    </h3>
+                    <p id="modalDescription" class="text-xs sm:text-sm text-gray-300 leading-relaxed bg-darkbg/40 p-4 rounded-2xl border border-darkborder/50"></p>
+                </div>
+
+                <div id="modalModFeaturesContainer" class="bg-brand-500/10 border border-brand-500/30 rounded-2xl p-4">
+                    <h4 class="text-xs font-bold text-brand-400 mb-1.5 flex items-center gap-2 uppercase tracking-wider">
+                        <i class="fa-solid fa-wand-magic-sparkles text-sm"></i> MOD / Hile Özellikleri
+                    </h4>
+                    <p id="modalModFeatures" class="text-xs font-semibold text-white leading-relaxed"></p>
+                </div>
+
+                <div class="space-y-3 pt-2">
+                    <a id="modalDownloadBtn" href="#" onclick="startDownloadProcess(event)" class="w-full flex items-center justify-center space-x-3 bg-gradient-to-r from-brand-500 via-emerald-500 to-green-600 hover:from-brand-400 hover:to-emerald-400 text-black font-extrabold py-4 px-6 rounded-2xl text-sm shadow-xl shadow-brand-500/25 transition duration-200 transform hover:scale-[1.02] active:scale-95">
+                        <i class="fa-solid fa-download text-lg"></i>
+                        <span id="downloadBtnText" class="tracking-wide">HIZLI APK İNDİR</span>
+                    </a>
+
+                    <a id="directMirrorLink" href="#" target="_blank" class="w-full flex items-center justify-center space-x-2 bg-darkbg hover:bg-slate-800 text-gray-300 font-bold py-3 px-4 rounded-xl text-xs border border-darkborder transition">
+                        <i class="fa-solid fa-link text-brand-400"></i>
+                        <span>Yedek İndirme Linki (MediaFire / Mega)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-darkcard w-full max-w-lg rounded-3xl shadow-2xl p-6 border border-darkborder my-8">
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-darkborder">
+                <h3 class="text-lg font-extrabold text-white font-heading flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up text-brand-400"></i> Yeni APK Oyunu Ekle
+                </h3>
+                <button onclick="closeUploadModal()" class="text-gray-400 hover:text-white p-2">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="addGameForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1.5 text-gray-300">Oyun Adı *</label>
+                    <input type="text" id="inputTitle" required placeholder="Örn: Anger of Stick 5 MOD" class="w-full px-4 py-2.5 text-xs rounded-xl border border-darkborder bg-darkbg text-white focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5 text-gray-300">Kategori *</label>
+                        <select id="inputCategory" required class="w-full px-3 py-2.5 text-xs rounded-xl border border-darkborder bg-darkbg text-white focus:outline-none focus:border-brand-500">
+                            <option value="Aksiyon">Aksiyon</option>
+                            <option value="Yarış">Yarış</option>
+                            <option value="RPG">RPG</option>
+                            <option value="Strateji">Strateji</option>
+                            <option value="Simülasyon">Simülasyon</option>
+                            <option value="Spor">Spor</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5 text-gray-300">Geliştirici Stüdyo</label>
+                        <input type="text" id="inputDev" placeholder="Örn: COWAN" class="w-full px-4 py-2.5 text-xs rounded-xl border border-darkborder bg-darkbg text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5 text-gray-300">Boyut (MB) *</label>
+                        <input type="text" id="inputSize" required placeholder="45 MB" class="w-full px-4 py-2.5 text-xs rounded-xl border border-darkborder bg-darkbg text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5 text-gray-300">Sürüm *</label>
+                        <input type="text" id="inputVersion" required placeholder="v1.1.8" class="w-full px-4 py-2.5 text-xs rounded-xl border border-darkborder bg-darkbg text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold mb-1.5 text-gray-300">İndirme Bağlantısı (APK Link) *</label>
+                    <input type="url" id="inputDownloadUrl" required placeholder="https://mediafire.com/file/..." class="w-full px-4 py-2.5 text-xs rounded-xl border border-darkborder bg-darkbg text-white focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold mb-1.5 text-gray-300">MOD / Hile Özelliği (Varsa)</label>
+                    <input type="text" id="inputModFeatures" placeholder="Örn: Sınırsız Altın ve Elmas Hilesi" class="w-full px-4 py-2.5 text-xs rounded-xl border border-darkborder bg-darkbg text-white focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold mb-1.5 text-gray-300">Açıklama</label>
+                    <textarea id="inputDescription" rows="3" placeholder="Oyun detayları, nasıl kurulacağı..." class="w-full px-4 py-2.5 text-xs rounded-xl border border-darkborder bg-darkbg text-white focus:outline-none focus:border-brand-500"></textarea>
+                </div>
+
+                <div class="pt-3 flex justify-end space-x-3">
+                    <button type="button" onclick="closeUploadModal()" class="px-5 py-2.5 text-xs font-bold text-gray-400 hover:text-white bg-darkbg rounded-xl">İptal</button>
+                    <button type="submit" class="px-6 py-2.5 text-xs font-extrabold text-black bg-brand-500 hover:bg-brand-400 rounded-xl shadow-lg shadow-brand-500/20">Oyunu Sitede Yayınla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-darkcard text-white px-5 py-4 rounded-2xl shadow-2xl flex items-center space-x-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none border border-brand-500/40">
+        <div class="w-8 h-8 rounded-xl bg-brand-500/20 flex items-center justify-center text-brand-400">
+            <i id="toastIcon" class="fa-solid fa-circle-check text-lg"></i>
+        </div>
+        <div>
+            <h4 class="text-xs font-extrabold text-white" id="toastTitle">Bildirim</h4>
+            <p id="toastMessage" class="text-xs text-gray-300">İşlem başarılı!</p>
+        </div>
+    </div>
+
+    <script>
+        // Initial Database
+        let gamesData = [
+            {
+                id: 1,
+                title: "Anger of Stick 5: Zombie",
+                category: "Aksiyon",
+                developer: "COWAN CO., LTD.",
+                size: "42 MB",
+                version: "v1.1.8",
+                rating: 4.9,
+                downloads: "100M+",
+                icon: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=300&auto=format&fit=crop&q=80",
+                cover: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop&q=80",
+                isMod: true,
+                modFeatures: "Sınırsız Para, Elmas & Tüm Silahlar Açık",
+                description: "Çöp adam aksiyon oyunlarının efsanesi! Şehri kaplayan zombilere karşı kendi ekibini kur, efsanevi silahları ve helikopterleri kullanarak ortalığı kasıp kavur.",
+                downloadUrl: "https://drive.google.com",
+                dateAdded: "2023-11-20"
+            },
+            {
+                id: 2,
+                title: "Subway Surfers",
+                category: "Aksiyon",
+                developer: "SYBO Games",
+                size: "145 MB",
+                version: "v3.20.1",
+                rating: 4.8,
+                downloads: "1B+",
+                icon: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&auto=format&fit=crop&q=80",
+                cover: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=80",
+                isMod: true,
+                modFeatures: "Sınırsız Anahtar, Sınırsız Altın, Tüm Karakterler Açık",
+                description: "Tren istasyonunda bekçiden kaçtığımız efsanevi sonsuz koşu oyunu. Modlu sürüm sayesinde sınırsız anahtar ile hiç yanmadan rekor kırın!",
+                downloadUrl: "https://drive.google.com",
+                dateAdded: "2023-11-18"
+            },
+            {
+                id: 3,
+                title: "Shadow Fight 2",
+                category: "RPG",
+                developer: "NEKKI",
+                size: "140 MB",
+                version: "v2.28.0",
+                rating: 4.7,
+                downloads: "100M+",
+                icon: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&auto=format&fit=crop&q=80",
+                cover: "https://images.unsplash.com/photo-1563089145-599997674d42?w=800&auto=format&fit=crop&q=80",
+                isMod: true,
+                modFeatures: "Sınırsız Para & Enerji, Maksimum Seviye Hilesi",
+                description: "Karanlık güçlerin kapılarını kapatmak için gölge dövüşçüsü olarak yeteneklerini sergile. Tüm büyülü kılıçlar ve zırhlar ücretsiz açık!",
+                downloadUrl: "https://drive.google.com",
+                dateAdded: "2023-11-15"
+            },
+            {
+                id: 4,
+                title: "Minecraft PE (Bedrock)",
+                category: "Simülasyon",
+                developer: "Mojang Studios",
+                size: "680 MB",
+                version: "v1.20.60",
+                rating: 4.9,
+                downloads: "500M+",
+                icon: "https://images.unsplash.com/photo-1627856013091-fed6e4e30025?w=300&auto=format&fit=crop&q=80",
+                cover: "https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=800&auto=format&fit=crop&q=80",
+                isMod: true,
+                modFeatures: "Ölümsüzlük (God Mode), Premium Skinler Açık",
+                description: "Sonsuz blok dünyasında hayal ettiğin her şeyi inşa et. Arkadaşlarınla sunuculara katıl veya hayatta kalma modunda ejderhayı yen!",
+                downloadUrl: "https://drive.google.com",
+                dateAdded: "2023-11-19"
+            },
+            {
+                id: 5,
+                title: "GTA: San Andreas",
+                category: "Aksiyon",
+                developer: "Rockstar Games",
+                size: "2.1 GB",
+                version: "v2.11.32",
+                rating: 4.8,
+                downloads: "50M+",
+                icon: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=300&auto=format&fit=crop&q=80",
+                cover: "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=800&auto=format&fit=crop&q=80",
+                isMod: true,
+                modFeatures: "Sınırsız Para, Cleo Hile Menüsü Entegreli",
+                description: "Carl Johnson (CJ) ile Los Santos sokaklarında krallığını kur. Türkçe altyazı ve yüksek çözünürlüklü grafik modu dahildir.",
+                downloadUrl: "https://drive.google.com",
+                dateAdded: "2023-10-30"
+            },
+            {
+                id: 6,
+                title: "Asphalt 9: Legends",
+                category: "Yarış",
+                developer: "Gameloft SE",
+                size: "2.4 GB",
+                version: "v4.3.0",
+                rating: 4.6,
+                downloads: "100M+",
+                icon: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=300&auto=format&fit=crop&q=80",
+                cover: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&auto=format&fit=crop&q=80",
+                isMod: true,
+                modFeatures: "Sınırsız Nitro, Bot Otomatik Sürüş Hilesi",
+                description: "En hızlı süper spor arabalarla gerçekçi yarış atmosferi. Ferrari, Porsche ve Bugatti ile rakiplerini geride bırak.",
+                downloadUrl: "https://drive.google.com",
+                dateAdded: "2023-11-05"
+            },
+            {
+                id: 7,
+                title: "PUBG MOBILE",
+                category: "Aksiyon",
+                developer: "KRAFTON, Inc.",
+                size: "1.2 GB",
+                version: "v3.0.0",
+                rating: 4.5,
+                downloads: "500M+",
+                icon: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&auto=format&fit=crop&q=80",
+                cover: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&auto=format&fit=crop&q=80",
+                isMod: false,
+                modFeatures: "Orijinal APK + 90 FPS Kilit Açıcı Dahil",
+                description: "100 kişilik battle royale heyecanı telefonunda! Arkadaşlarınla ekibini kur, haritaya atla ve son hayatta kalan takım ol.",
+                downloadUrl: "https://drive.google.com",
+                dateAdded: "2023-11-12"
+            },
+            {
+                id: 8,
+                title: "Head Ball 2 - Kafa Topu 2",
+                category: "Spor",
+                developer: "Masomo Gaming",
+                size: "130 MB",
+                version: "v1.540",
+                rating: 4.7,
+                downloads: "100M+",
+                icon: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=300&auto=format&fit=crop&q=80",
+                cover: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?w=800&auto=format&fit=crop&q=80",
+                isMod: true,
+                modFeatures: "Sınırsız Elmas, Süper Güçler Dondurulmuş",
+                description: "Eğlenceli futbol maçı heyecanı! Özel yeteneklerini kullan, karakterini geliştir ve online rakiplerini mağlup et.",
+                downloadUrl: "https://drive.google.com",
+                dateAdded: "2023-11-01"
+            }
+        ];
+
+        const categories = ["Tümü", "Popüler", "Aksiyon", "Yarış", "RPG", "Strateji", "Simülasyon", "Spor"];
+        let currentCategory = "Tümü";
+        let searchQuery = "";
+        let currentActiveGame = null;
+
+        window.onload = function() {
+            renderCategories();
+            renderGames();
+        };
+
+        function renderCategories() {
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = categories.map(cat => `
+                <button onclick="filterCategory('${cat}')" 
+                    class="px-5 py-2.5 rounded-2xl text-xs font-bold whitespace-nowrap transition-all duration-200 border ${
+                        currentCategory === cat 
+                        ? 'bg-brand-500 text-black border-brand-400 shadow-lg shadow-brand-500/30 scale-105' 
+                        : 'bg-darkcard text-gray-300 border-darkborder hover:bg-slate-800 hover:text-white'
+                    }">
+                    ${cat === 'Popüler' ? '<i class="fa-solid fa-fire mr-1.5 text-amber-400"></i>' : ''}
+                    ${cat === 'Aksiyon' ? '<i class="fa-solid fa-gun mr-1.5 text-brand-400"></i>' : ''}
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            renderCategories();
+            renderGames();
+        }
+
+        function resetFilters() {
+            currentCategory = "Tümü";
+            searchQuery = "";
+            document.getElementById('searchInput').value = "";
+            document.getElementById('mobileSearchInput').value = "";
+            renderCategories();
+            renderGames();
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            renderGames();
+        }
+
+        function handleMobileSearch() {
+            searchQuery = document.getElementById('mobileSearchInput').value.toLowerCase();
+            renderGames();
+        }
+
+        function renderGames() {
+            const grid = document.getElementById('gamesGrid');
+            const emptyState = document.getElementById('emptyState');
+            const sortBy = document.getElementById('sortBy').value;
+
+            let filtered = gamesData.filter(game => {
+                const matchesCategory = (currentCategory === "Tümü") || 
+                                        (currentCategory === "Popüler" && parseFloat(game.rating) >= 4.7) ||
+                                        (game.category === currentCategory);
+                
+                const matchesSearch = game.title.toLowerCase().includes(searchQuery) || 
+                                      game.category.toLowerCase().includes(searchQuery) ||
+                                      game.developer.toLowerCase().includes(searchQuery);
+
+                return matchesCategory && matchesSearch;
+            });
+
+            if(sortBy === 'rating') {
+                filtered.sort((a, b) => b.rating - a.rating);
+            } else if(sortBy === 'newest') {
+                filtered.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+            }
+
+            document.getElementById('sectionTitle').innerText = currentCategory === 'Tümü' ? 'Öne Çıkan APK Oyunlar' : `${currentCategory} Kategorisindeki Oyunlar`;
+            document.getElementById('gameCountText').innerText = `Toplam ${filtered.length} adet APK oyunu listeleniyor`;
+
+            if(filtered.length === 0) {
+                grid.innerHTML = "";
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            grid.innerHTML = filtered.map(game => `
+                <div class="bg-darkcard rounded-3xl p-4 border border-darkborder shadow-xl hover:border-brand-500/50 transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1">
+                    <div>
+                        <div class="relative mb-4 overflow-hidden rounded-2xl bg-darkbg h-36">
+                            <img src="${game.cover}" alt="${game.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darkcard via-transparent to-transparent"></div>
+                            
+                            <img src="${game.icon}" onerror="this.src='https://placehold.co/100x100/22c55e/black?text=APK'" class="absolute bottom-2 left-3 w-14 h-14 rounded-2xl border-2 border-brand-500 shadow-xl object-cover bg-darkbg">
+
+                            ${game.isMod ? `
+                                <span class="absolute top-3 right-3 bg-brand-500 text-black text-[10px] font-extrabold px-2.5 py-1 rounded-lg shadow-lg">
+                                    MOD APK
+                                </span>
+                            ` : `
+                                <span class="absolute top-3 right-3 bg-blue-500 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-lg shadow-lg">
+                                    FULL APK
+                                </span>
+                            `}
+                        </div>
+
+                        <h3 class="font-extrabold text-base text-white line-clamp-1 group-hover:text-brand-400 transition font-heading mb-1">${game.title}</h3>
+                        <p class="text-xs text-gray-400 mb-3">${game.developer} • <span class="text-brand-400 font-semibold">${game.category}</span></p>
+
+                        <div class="grid grid-cols-2 gap-2 text-[11px] text-gray-300 mb-4 bg-darkbg/60 p-2.5 rounded-xl border border-darkborder/60">
+                            <span class="flex items-center gap-1 font-bold text-amber-400">
+                                <i class="fa-solid fa-star"></i> ${game.rating} Puan
+                            </span>
+                            <span class="text-right font-medium text-gray-300">
+                                <i class="fa-solid fa-floppy-disk text-brand-400 mr-1"></i>${game.size}
+                            </span>
+                        </div>
+                    </div>
+
+                    <button onclick="openModal(${game.id})" class="w-full bg-gradient-to-r from-brand-600 to-emerald-600 hover:from-brand-500 hover:to-emerald-500 text-black font-extrabold py-3 rounded-2xl text-xs transition duration-200 flex items-center justify-center space-x-2 shadow-lg shadow-brand-600/20 active:scale-95">
+                        <i class="fa-solid fa-download text-sm"></i>
+                        <span>OYUNU İNCELE & İNDİR</span>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openModal(id) {
+            const game = gamesData.find(g => g.id === id);
+            if(!game) return;
+
+            currentActiveGame = game;
+
+            document.getElementById('modalCover').src = game.cover;
+            document.getElementById('modalIcon').src = game.icon;
+            document.getElementById('modalTitle').innerText = game.title;
+            document.getElementById('modalDevName').innerText = game.developer;
+            document.getElementById('modalSize').innerText = game.size;
+            document.getElementById('modalVersion').innerText = game.version;
+            document.getElementById('modalRating').innerHTML = `<i class="fa-solid fa-star text-amber-400"></i> ${game.rating} / 5.0`;
+            document.getElementById('modalDescription').innerText = game.description;
+
+            const modContainer = document.getElementById('modalModFeaturesContainer');
+            if(game.isMod && game.modFeatures) {
+                modContainer.classList.remove('hidden');
+                document.getElementById('modalModFeatures').innerText = game.modFeatures;
+                document.getElementById('modalModBadge').innerText = "MOD APK (HİLELİ)";
+                document.getElementById('downloadBtnText').innerText = `HIZLI İNDİR (${game.size} - MOD)`;
+            } else {
+                modContainer.classList.add('hidden');
+                document.getElementById('modalModBadge').innerText = "ORİJİNAL APK";
+                document.getElementById('downloadBtnText').innerText = `HIZLI İNDİR (${game.size} - FULL)`;
+            }
+
+            document.getElementById('gameModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('gameModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function startDownloadProcess(e) {
+            e.preventDefault();
+            const btnText = document.getElementById('downloadBtnText');
+            const originalText = btnText.innerText;
+            
+            btnText.innerText = "İNDİRME BAĞLANTISI HAZIRLANIYOR...";
+            
+            setTimeout(() => {
+                btnText.innerText = "İNDİRME BAŞLADI!";
+                showToast("İndirme Başlatıldı", `${currentActiveGame.title} APK dosyası güvenli sunucudan indiriliyor.`);
+                
+                setTimeout(() => {
+                    btnText.innerText = originalText;
+                }, 2500);
+            }, 1200);
+        }
+
+        function openUploadModal() {
+            document.getElementById('uploadModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('inputTitle').value;
+            const category = document.getElementById('inputCategory').value;
+            const dev = document.getElementById('inputDev').value || "Bilinmeyen Stüdyo";
+            const size = document.getElementById('inputSize').value;
+            const version = document.getElementById('inputVersion').value;
+            const modFeatures = document.getElementById('inputModFeatures').value;
+            const description = document.getElementById('inputDescription').value || "Açıklama bulunmuyor.";
+            const downloadUrl = document.getElementById('inputDownloadUrl').value;
+
+            const newGame = {
+                id: Date.now(),
+                title: title,
+                category: category,
+                developer: dev,
+                size: size,
+                version: version,
+                rating: 5.0,
+                downloads: "1",
+                icon: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&auto=format&fit=crop&q=80",
+                cover: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop&q=80",
+                isMod: !!modFeatures,
+                modFeatures: modFeatures,
+                description: description,
+                downloadUrl: downloadUrl,
+                dateAdded: new Date().toISOString().split('T')[0]
+            };
+
+            gamesData.unshift(newGame);
+            renderGames();
+            closeUploadModal();
+            document.getElementById('addGameForm').reset();
+
+            showToast("Tebrikler!", "Yeni APK oyununuz başarıyla siteye eklendi.");
+        }
+
+        function showToast(title, msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMessage').innerText = msg;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
+```
